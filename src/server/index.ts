@@ -1,15 +1,11 @@
-import { initTRPC } from "@trpc/server";
 import { createHTTPServer } from "@trpc/server/adapters/standalone";
+import { router } from "./context";
+import { helloRouter } from "./routes/hello";
 
 const PORT = 2022;
 
-const t = initTRPC.create();
-
-const publicProcedure = t.procedure;
-const router = t.router;
-
 const appRouter = router({
-    hello: publicProcedure.query(() => 'hello from trpc standalone server')
+    hello: helloRouter,
 });
 
 export type AppRouter = typeof appRouter;
