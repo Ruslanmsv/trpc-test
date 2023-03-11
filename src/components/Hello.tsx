@@ -2,8 +2,11 @@ import { api } from "../pages/index";
 
 export function Hello() {
   const hello = api.hello.useQuery({ name: "React Query" });
-  console.log(hello);
   const { data, status, isSuccess, isError, error } = hello;
+
+  if (!data) {
+    return <h3>Loading...</h3>;
+  }
 
   return (
     <>
