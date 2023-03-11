@@ -1,6 +1,10 @@
-import { createHTTPServer } from "@trpc/server/adapters/standalone";
+import http from 'node:http';
+
+import { createHTTPHandler } from "@trpc/server/adapters/standalone";
+
 import { router } from "./context";
 import { helloRouter } from "./routes/hello";
+
 
 const PORT = 2022;
 
@@ -10,10 +14,22 @@ const appRouter = router({
 
 export type AppRouter = typeof appRouter;
 
-const { listen } = createHTTPServer({
+const handler = createHTTPHandler({
     router: appRouter,
 });
 
-console.log(`listening on localhost:${PORT}`);
+const server = http.createServer((req, res) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Request-Method', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET');
+    res.setHeader('Access-Control-Allow-Headers', '*');
+    if (req.method === 'OPTIONS') {
+        res.writeHead(200);
+        return res.end();
+    }
+    handler(req, res);
+})
 
-listen(PORT);
+server.listen(PORT, () => {
+    console.log(`listening on localhost:${PORT}`)
+})
