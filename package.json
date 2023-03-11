@@ -6,20 +6,36 @@
   "scripts": {
     "dev:server": "tsx watch src/server/index.ts",
     "build:server": "tsc",
-    "start:server": "node dist/index.js"
+    "start:server": "node dist/index.js",
+    "dev:client": "vite",
+    "build:client": "tsc && vite build",
+    "start:client": "vite preview",
+    "dev": "run-p dev:*",
+    "build": "run-s build:server build:client",
+    "start": "run-p start:*"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@tanstack/react-query": "^4.26.1",
+    "@trpc/client": "^10.15.0",
+    "@trpc/react-query": "^10.15.0",
     "@trpc/server": "^10.15.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "superjson": "^1.12.2",
     "zod": "^3.21.4"
   },
   "devDependencies": {
     "@types/node": "^18.15.0",
+    "@types/react": "^18.0.28",
+    "@types/react-dom": "^18.0.11",
+    "@vitejs/plugin-react": "^3.1.0",
+    "@vitejs/plugin-react-swc": "^3.2.0",
     "npm-run-all": "^4.1.5",
     "tsx": "^3.12.3",
-    "typescript": "^4.9.5"
+    "typescript": "^4.9.5",
+    "vite": "^4.1.4"
   }
 }
